@@ -278,4 +278,7 @@ pyrightconfig.json
 .history
 .ionide
 
+# Ignorar as migrations
+migrations/
+
 # End of https://www.toptal.com/developers/gitignore/api/python,flask,visualstudiocode
