@@ -1,8 +1,5 @@
 from flask import json
-from werkzeug.exceptions import HTTPException
-from src.app import app
-    
-@app.errorhandler(HTTPException)
+
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
     response = e.get_response()
