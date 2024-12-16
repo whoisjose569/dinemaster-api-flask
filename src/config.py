@@ -1,10 +1,10 @@
 from flask import Flask
 from decouple import config
-from src.errors.error_handler import handle_exception
+from src.errors.error_handler import register_error_handlers
 from werkzeug.exceptions import HTTPException
 
 def configure_app(app: Flask):
-    app.register_error_handler(HTTPException, handle_exception)
+    register_error_handlers(app)
     
 
 class Config:
