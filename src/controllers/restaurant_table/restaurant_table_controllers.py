@@ -9,9 +9,8 @@ bp = Blueprint('restaurant_table', __name__, url_prefix='/tables')
 def create_restaurant_table():
     try:
         data = request.json
-        if _check_table_number_exists(data):
-            return ({"error": "RestaurantTable already exists"}), HTTPStatus.CONFLICT
+        _check_table_number_exists(data)
         response = _create_restaurant_table(data) 
         return format_table_presenter(response), HTTPStatus.CREATED
     except Exception as exc:
-        return ({"error": str(exc)}), 500
+        raise
