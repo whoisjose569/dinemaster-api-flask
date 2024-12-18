@@ -1,7 +1,9 @@
-def format_table_presenter(table):
-    return {'RestaurantTable': {
-        "id": table.id,
-        "table_number": table.table_number,
-        "table_status": table.table_status
-    }}
+class RestaurantTablePresenter:
+    def format_table_presenter(self, data):
+        return{
+            "msg": 'RestaurantTable created!.',
+            "id": data.id,
+            "table_number": data.table_number,
+            "table_status": data.table_status
+        }
     
