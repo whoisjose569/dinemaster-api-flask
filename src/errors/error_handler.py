@@ -28,5 +28,5 @@ def register_error_handlers(app):
         return {
             "code": 500,
             "name": "Internal Server Error",
-            "description": "Algo deu errado no servidor.",
+            "description": "Something Went Wrong on the Server.",
         }, 500
