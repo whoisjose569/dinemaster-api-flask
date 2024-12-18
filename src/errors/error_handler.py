@@ -1,6 +1,6 @@
 from flask import json
 from werkzeug.exceptions import HTTPException
-from src.errors.custom_errors import TableAlreadyExistsError
+from src.errors.custom_errors import TableAlreadyExistsError, TableNumberValidationError, TableNumberMustBeANumber
 
 def register_error_handlers(app):
 
@@ -22,6 +22,22 @@ def register_error_handlers(app):
             "name": "Conflict",
             "description": str(e),
         }, 409
+
+    @app.errorhandler(TableNumberValidationError)
+    def handle_table_number_validation_error(e):
+        return {
+            "code": 400,
+            "name": "Bad Request",
+            "description": str(e),
+        }, 400
+
+    @app.errorhandler(TableNumberMustBeANumber)
+    def handle_table_number_validation_error(e):
+        return {
+            "code": 400,
+            "name": "Bad Request",
+            "description": str(e),
+        }, 400
 
     @app.errorhandler(Exception)
     def handle_generic_exception(e):
