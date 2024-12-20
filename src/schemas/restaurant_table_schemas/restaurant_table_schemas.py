@@ -8,13 +8,13 @@ class CreateRestaurantTableSchema(ma.SQLAlchemyAutoSchema):
         model = RestaurantTable
         exclude = ("id",)
     
-    table_status = fields.String(missing=None)
-    table_number = fields.Raw(required=True, strict=True)
+    table_status = fields.String(load_default=None)
+    table_number = fields.Raw(required=True)
     
     @validates("table_number")
     def validate_table_number(self, value):
         if not isinstance(value, int):
-            raise TableNumberMustBeANumber("Table number must be a integer")
+            raise TableNumberMustBeANumber("Table number must be an integer")
         if value <= 0:
             raise TableNumberValidationError("Table number must be positive")
     
