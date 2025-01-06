@@ -1,8 +1,5 @@
-import pytest
 from src.repositories.restaurant_table.restaurant_table_repository import RestaurantTableRepository
 from src.models.restaurant_table import RestaurantTable
-from src.errors.custom_errors import TableAlreadyExistsError
-from src.models.base import db
 
 def test_check_table_number_exists(db_session):
     existing_table = RestaurantTable(table_number = 1)
