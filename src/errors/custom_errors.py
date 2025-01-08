@@ -11,3 +11,7 @@ class TableNumberValidationError(RestaurantTableError):
 class TableNumberMustBeANumber(RestaurantTableError):
     def __init__(self, table_number):
         super().__init__(f'Table number must be an integer')
+
+class TableNotExists(RestaurantTableError):
+    def __init__(self, table_number):
+        super().__init__(f'The table with the number {table_number} not exists.')
