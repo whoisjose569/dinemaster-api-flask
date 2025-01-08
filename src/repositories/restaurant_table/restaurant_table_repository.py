@@ -1,6 +1,5 @@
 from src.models.restaurant_table import RestaurantTable
 from src.models.base import db
-from src.errors.custom_errors import TableAlreadyExistsError
 
 class RestaurantTableRepository:
     def __init__(self):
@@ -14,3 +13,7 @@ class RestaurantTableRepository:
         self.__session.add(restaurant_table)
         self.__session.commit()
         return restaurant_table
+    
+    def list_restaurant_table_by_number(self, table_number):
+        restaraunt_table = self.__session.query(RestaurantTable).filter_by(table_number=table_number).first()
+        return restaraunt_table
