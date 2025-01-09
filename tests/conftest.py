@@ -18,4 +18,3 @@ def db_session(app):
         db.create_all()
         yield db.session
         db.session.remove()
-        db.drop_all()
