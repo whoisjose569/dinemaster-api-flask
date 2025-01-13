@@ -1,7 +1,8 @@
 import pytest
 from src.domain.restaurant_table_use_cases.create_table import CreateRestaurantTableService
 from src.domain.restaurant_table_use_cases.list_table import ListRestaurantTableService
-from src.errors.custom_errors import TableAlreadyExistsError, TableNotExists
+from src.domain.restaurant_table_use_cases.list_all_tables import ListAllRestaurantTableService
+from src.errors.custom_errors import TableAlreadyExistsError, TableNotExists, NotTablesAvailable
 
 
 def test_create_restaurant_table_raises_error_when_table_exists(mocker):
@@ -34,4 +35,13 @@ def test_list_restaurant_table_raises_table_not_exists(mocker):
     
     with pytest.raises(TableNotExists):
         service.list_table_by_number(1)
+
+def test_list_restaurant_table_raises_not_tables_available(mocker):
+    mock_repo = mocker.Mock()
+    mock_repo.list_restaurant_table.return_value = None
+    
+    service = ListAllRestaurantTableService(mock_repo)
+    
+    with pytest.raises(NotTablesAvailable):
+        service.list_all_table()
     
