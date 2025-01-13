@@ -61,6 +61,41 @@ def test_list_table_by_number(client, mocker, db_session):
     
     db_session.delete(table)
     db_session.commit()
+
+def test_list_all_tables_controller(client, mocker, db_session):
+    mock_list_table_composer = mocker.patch('src.composer.restaurant_table.list_all_table_composer')
+    mock_service = mocker.Mock()
+    mock_list_table_composer.return_value = mock_service
     
+    mock_presenter_composer = mocker.patch('src.composer.restaurant_table_presenter_composer')
+    mock_presenter = mocker.Mock()
+    mock_presenter_composer.return_value = mock_presenter    
+
+    table_one = RestaurantTable(table_number=1)
+    db_session.add(table_one)
+    db_session.commit()
     
+    table_two = RestaurantTable(table_number=2)
+    db_session.add(table_two)
+    db_session.commit()
+
+    data = [table_one, table_two]
+    mock_service.list_all_table.return_value = data
     
+
+    mock_presenter.format_all_table_presenter.return_value = [
+        {"id": 1, "table_number": 1, "table_status": "livre"},
+        {"id": 2, "table_number": 2, "table_status": "livre"},
+    ]
+    
+    response = client.get("/tables/")
+
+    assert response.status_code == 200
+    assert response.json == [
+        {"id": 1, "table_number": 1, "table_status": "livre"},
+        {"id": 2, "table_number": 2, "table_status": "livre"},
+    ]
+    
+    db_session.delete(table_one)
+    db_session.delete(table_two)
+    db_session.commit()
