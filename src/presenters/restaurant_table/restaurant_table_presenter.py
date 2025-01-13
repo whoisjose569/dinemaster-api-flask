@@ -6,3 +6,10 @@ class RestaurantTablePresenter:
             "table_status": data.table_status
         }
     
+    def format_all_table_presenter(self, data):
+        return [{
+            "id": table.id,
+            "table_number": table.table_number,
+            "table_status": table.table_status
+        } for table in data]
+    
