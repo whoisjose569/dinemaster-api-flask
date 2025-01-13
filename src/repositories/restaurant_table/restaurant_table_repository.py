@@ -17,3 +17,7 @@ class RestaurantTableRepository:
     def list_restaurant_table_by_number(self, table_number):
         restaraunt_table = self.__session.query(RestaurantTable).filter_by(table_number=table_number).first()
         return restaraunt_table
+    
+    def list_restaurant_table(self):
+        restaurant_table = self.__session.query(RestaurantTable).all()
+        return restaurant_table
