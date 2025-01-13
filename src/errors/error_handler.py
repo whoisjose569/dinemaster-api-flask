@@ -1,6 +1,6 @@
 from flask import json
 from werkzeug.exceptions import HTTPException
-from src.errors.custom_errors import TableAlreadyExistsError, TableNumberValidationError, TableNumberMustBeANumber, TableNotExists
+from src.errors.custom_errors import TableAlreadyExistsError, TableNumberValidationError, TableNumberMustBeANumber, TableNotExists, NotTablesAvailable
 
 def register_error_handlers(app):
 
@@ -41,6 +41,14 @@ def register_error_handlers(app):
 
     @app.errorhandler(TableNotExists)
     def handle_table_not_exists(e):
+        return {
+            "code": 404,
+            "name": "NotFound",
+            "description": str(e),
+        }, 404
+
+    @app.errorhandler(NotTablesAvailable)
+    def handle_not_tables_available(e):
         return {
             "code": 404,
             "name": "NotFound",

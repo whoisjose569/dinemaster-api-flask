@@ -15,3 +15,7 @@ class TableNumberMustBeANumber(RestaurantTableError):
 class TableNotExists(RestaurantTableError):
     def __init__(self, table_number):
         super().__init__(f'The table with the number {table_number} not exists.')
+    
+class NotTablesAvailable(RestaurantTableError):
+    def __init__(self):
+        super().__init__(f'No tables available to list.')
