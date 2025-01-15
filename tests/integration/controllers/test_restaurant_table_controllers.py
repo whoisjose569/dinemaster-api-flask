@@ -99,3 +99,20 @@ def test_list_all_tables_controller(client, mocker, db_session):
     db_session.delete(table_one)
     db_session.delete(table_two)
     db_session.commit()
+    
+
+def test_delete_table_controller(client, mocker, db_session):
+    mock_delete_table_composer = mocker.patch('src.composer.restaurant_table.delete_table_composer')
+    mock_service = mocker.Mock()
+    mock_delete_table_composer.return_value = mock_service
+    
+    table = RestaurantTable(table_number = 1)
+    db_session.add(table)
+    db_session.commit()
+    
+    mock_service.delete_table.return_value = None
+    
+    response = client.delete("/tables/1")
+
+    assert response.status_code == 204
+    assert response.data == b""
