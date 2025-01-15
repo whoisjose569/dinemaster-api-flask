@@ -29,4 +29,4 @@ class RestaurantTableRepository:
         restaurant_table = self.__session.query(RestaurantTable).filter_by(table_number=table_number).first()
         self.__session.delete(restaurant_table)
         self.__session.commit()
-        return restaurant_table
+        return None
