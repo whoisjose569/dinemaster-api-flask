@@ -21,3 +21,7 @@ class RestaurantTableRepository:
     def list_restaurant_table(self):
         restaurant_table = self.__session.query(RestaurantTable).all()
         return restaurant_table
+    
+    def delete_restaurant_table(self, table_number):
+        restaurant_table = self.__session.query(RestaurantTable).filter_by(table_number=table_number).first()
+        return restaurant_table
