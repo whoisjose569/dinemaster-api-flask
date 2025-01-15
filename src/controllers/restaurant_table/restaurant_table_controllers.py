@@ -50,12 +50,12 @@ def list_all_restaurant_table():
     except Exception as exc:
         raise
 
-@bp.route('/<int:table_number', methods=["DELETE"])
+@bp.route('/<int:table_number>', methods=["DELETE"])
 def delete_restaurant_table(table_number):
     try:
         use_case = delete_table_composer()
-        response = use_case.delete_table(table_number)
+        use_case.delete_table(table_number)
         
-        return None, HTTPStatus.NO_CONTENT
+        return "", HTTPStatus.NO_CONTENT
     except Exception as exc:
         raise
