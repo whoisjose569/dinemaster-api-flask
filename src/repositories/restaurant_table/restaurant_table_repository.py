@@ -7,6 +7,9 @@ class RestaurantTableRepository:
     
     def check_table_number_exists(self, data):
         return self.__session.query(RestaurantTable).filter_by(table_number = data["table_number"]).first()
+    
+    def check_table_exists(self, table_number):
+        return self.__session.query(RestaurantTable).filter_by(table_number = table_number).first()
 
     def create_restaurant_table(self, data):
         restaurant_table = RestaurantTable(table_number=data['table_number'])
@@ -24,4 +27,6 @@ class RestaurantTableRepository:
     
     def delete_restaurant_table(self, table_number):
         restaurant_table = self.__session.query(RestaurantTable).filter_by(table_number=table_number).first()
+        self.__session.delete(restaurant_table)
+        self.__session.commit()
         return restaurant_table
