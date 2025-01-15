@@ -58,3 +58,13 @@ def test_list_all_tables(db_session):
     
     db_session.delete(existing_table_two)
     db_session.commit()
+
+def test_delete_table(db_session):
+    new_table = RestaurantTable(table_number = 1)
+    db_session.add(new_table)
+    db_session.commit()
+    
+    repository = RestaurantTableRepository()
+    result = repository.delete_restaurant_table(1)
+    
+    assert result is None
