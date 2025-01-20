@@ -30,3 +30,9 @@ class RestaurantTableRepository:
         self.__session.delete(restaurant_table)
         self.__session.commit()
         return None
+    
+    def update_restaurant_table(self, table_number, data):
+        restaurant_table = self.__session.query(RestaurantTable).filter_by(table_number=table_number).first()
+        restaurant_table.table_status = data["table_status"]
+        self.__session.commit()
+        return restaurant_table
