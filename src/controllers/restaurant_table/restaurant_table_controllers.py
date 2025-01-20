@@ -5,7 +5,8 @@ from src.composer.restaurant_table.list_table_composer import list_table_compose
 from src.composer.restaurant_table.list_all_table_composer import list_all_table_composer
 from src.composer.restaurant_table.delete_table_composer import delete_table_composer
 from src.composer.restaurant_table_presenter_composer import restaurant_table_presenter_composer
-from src.schemas.restaurant_table_schemas.restaurant_table_schemas import CreateRestaurantTableSchema
+from src.composer.restaurant_table.update_table_composer import update_table_composer
+from src.schemas.restaurant_table_schemas.restaurant_table_schemas import CreateRestaurantTableSchema, UpdateRestaurantTableSchema
 
 
 bp = Blueprint('restaurant_table', __name__, url_prefix='/tables')
@@ -57,5 +58,21 @@ def delete_restaurant_table(table_number):
         use_case.delete_table(table_number)
         
         return "", HTTPStatus.NO_CONTENT
+    except Exception as exc:
+        raise
+
+@bp.route('/<int:table_number>', methods=["PATCH"])
+def update_restaraunt_table(table_number):
+    try:
+        data = request.json
+        schema = UpdateRestaurantTableSchema()
+        validated_data = schema.load(data)
+        
+        use_case  = update_table_composer()
+        response = use_case.update_table(table_number, validated_data)
+        
+        presenter = restaurant_table_presenter_composer()
+        formatted_response = presenter.format_table_presenter(response)
+        return formatted_response, HTTPStatus.OK
     except Exception as exc:
         raise
