@@ -19,3 +19,7 @@ class TableNotExists(RestaurantTableError):
 class NotTablesAvailable(RestaurantTableError):
     def __init__(self):
         super().__init__(f'No tables available to list.')
+
+class TableStatusMustBeAString(RestaurantTableError):
+    def __init__(self, table_number):
+        super().__init__(f'Table status must be an string')
