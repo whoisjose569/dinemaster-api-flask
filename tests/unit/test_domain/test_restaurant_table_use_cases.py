@@ -3,6 +3,7 @@ from src.domain.restaurant_table_use_cases.create_table import CreateRestaurantT
 from src.domain.restaurant_table_use_cases.list_table import ListRestaurantTableService
 from src.domain.restaurant_table_use_cases.list_all_tables import ListAllRestaurantTableService
 from src.domain.restaurant_table_use_cases.delete_table import DeleteRestaurantTableService
+from src.domain.restaurant_table_use_cases.update_table import UpdateRestaurantTableService
 from src.errors.custom_errors import TableAlreadyExistsError, TableNotExists, NotTablesAvailable
 
 
@@ -53,4 +54,12 @@ def test_delete_restaurant_table_raises_error_when_table_exists(mocker):
     
     with pytest.raises(TableNotExists):
         service.delete_table(1)
+
+def test_update_restaurant_table_raises_table_not_exists(mocker):
+    mock_repo = mocker.Mock()
+    mock_repo.check_table_exists.return_value = None
     
+    service = UpdateRestaurantTableService(mock_repo)
+    
+    with pytest.raises(TableNotExists):
+        service.update_table(21, {"table_status": "ocupado"})

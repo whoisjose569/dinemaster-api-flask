@@ -68,3 +68,18 @@ def test_delete_table(db_session):
     result = repository.delete_restaurant_table(1)
     
     assert result is None
+
+def test_update_table(db_session):
+    new_table = RestaurantTable(table_number = 21 )
+    db_session.add(new_table)
+    db_session.commit()
+    
+    data = {"table_status": "ocupado"}
+    repository = RestaurantTableRepository()
+    result = repository.update_restaurant_table(21, data)
+    
+    assert result.table_status == "ocupado"
+    
+    db_session.delete(new_table)
+    db_session.commit()
+    
