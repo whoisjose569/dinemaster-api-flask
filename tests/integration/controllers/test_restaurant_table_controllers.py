@@ -116,3 +116,37 @@ def test_delete_table_controller(client, mocker, db_session):
 
     assert response.status_code == 204
     assert response.data == b""
+
+def test_update_table_controller(client, mocker, db_session):
+    mock_update_table_service_composer = mocker.patch("src.composer.restaurant_table.update_table_composer")
+    mock_service = mocker.Mock()
+    mock_update_table_service_composer.return_value = mock_service
+    
+    mock_presenter_composer = mocker.patch('src.composer.restaurant_table_presenter_composer')
+    mock_presenter = mocker.Mock()
+    mock_presenter_composer.return_value = mock_presenter
+    
+    table = RestaurantTable(table_number = 21)
+    db_session.add(table)
+    db_session.commit()
+    
+    mock_presenter.format_table_presenter.return_value = {
+        "id": table.id,
+        "table_number": table.table_status,
+        "table_status": "ocupado"
+    }
+    
+    mock_service.update_table.return_value = table
+    data = {"table_status": "ocupado"}
+    response = client.patch("/tables/21",json=data)
+    
+    assert response.status_code == 200
+    assert response.json == {
+        "id": table.id,
+        "table_number": table.table_number,
+        "table_status": "ocupado"
+    }
+    
+    db_session.delete(table)
+    db_session.commit()
+    
