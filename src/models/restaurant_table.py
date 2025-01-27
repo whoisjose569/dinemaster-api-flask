@@ -1,6 +1,7 @@
 import sqlalchemy as sa
 from .base import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from src.models.orders import Orders
 
 class RestaurantTable(db.Model):
     __tablename__ = "restaurant_table"

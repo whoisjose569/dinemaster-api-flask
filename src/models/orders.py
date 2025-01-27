@@ -9,7 +9,7 @@ class Orders(db.Model):
     __tablename__ = "orders"
     
     id: Mapped[int] = mapped_column(sa.Integer, primary_key=True, autoincrement=True)
-    restaurant_table_id: Mapped[int] = mapped_column(ForeignKey("restaurant_table.id"), nullable=True)
+    restaurant_table_id: Mapped[int] = mapped_column(ForeignKey("restaurant_table.id", name="fk_restaurant_table_id"), nullable=True)
     create_at: Mapped[datetime] = mapped_column(sa.DateTime, server_default=func.now())
     order_status: Mapped[str] = mapped_column(sa.String(20), default="Em preparo")
     delivery_type: Mapped[str] = mapped_column(sa.String(20), nullable=True)
