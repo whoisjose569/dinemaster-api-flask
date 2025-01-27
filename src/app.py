@@ -2,6 +2,7 @@ from flask import Flask
 from src.config import Config, configure_app
 from flask_migrate import Migrate
 from src.controllers.restaurant_table import restaurant_table_controllers
+from src.controllers.orders import orders_controllers
 from src.models.base import db
 from src.utils import ma
 
@@ -19,5 +20,6 @@ def create_app():
     ma.init_app(app) 
     
     app.register_blueprint(restaurant_table_controllers.bp)
+    app.register_blueprint(orders_controllers.bp)
     
     return app
