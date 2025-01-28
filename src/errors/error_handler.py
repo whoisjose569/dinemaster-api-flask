@@ -1,6 +1,6 @@
 from flask import json
 from werkzeug.exceptions import HTTPException
-from src.errors.custom_errors import TableAlreadyExistsError, TableNumberValidationError, TableNumberMustBeANumber, TableNotExists, NotTablesAvailable, TableStatusMustBeAString
+from src.errors.custom_errors import TableAlreadyExistsError, TableNumberValidationError, TableNumberMustBeANumber, TableNotExists, NotTablesAvailable, TableStatusMustBeAString, OrderStatusMustBeAString
 
 def register_error_handlers(app):
 
@@ -57,6 +57,14 @@ def register_error_handlers(app):
 
     @app.errorhandler(TableStatusMustBeAString)
     def handle_table_status_validation_error(e):
+        return {
+            "code": 400,
+            "name": "Bad Request",
+            "description": str(e),
+        }, 400
+
+    @app.errorhandler(OrderStatusMustBeAString)
+    def handle_order_status_validation_error(e):
         return {
             "code": 400,
             "name": "Bad Request",

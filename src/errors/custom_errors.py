@@ -1,6 +1,9 @@
 class RestaurantTableError(Exception):
     pass
 
+class OrderError(Exception):
+    pass
+
 class TableAlreadyExistsError(RestaurantTableError):
     def __init__(self, table_number):
         super().__init__(f'The table with the number {table_number} is already registered.')
@@ -23,3 +26,7 @@ class NotTablesAvailable(RestaurantTableError):
 class TableStatusMustBeAString(RestaurantTableError):
     def __init__(self, table_number):
         super().__init__(f'Table status must be an string')
+
+class OrderStatusMustBeAString(OrderError):
+    def __init__(self, table_number):
+        super().__init__(f'Order status must be an string')
