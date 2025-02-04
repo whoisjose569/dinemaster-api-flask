@@ -13,5 +13,6 @@ class Orders(db.Model):
     create_at: Mapped[datetime] = mapped_column(sa.DateTime, server_default=func.now())
     order_status: Mapped[str] = mapped_column(sa.String(20), default="Em preparo")
     delivery_type: Mapped[str] = mapped_column(sa.String(20), nullable=True)
+    order_items: Mapped[str] = mapped_column(sa.String(500), nullable=True)
      
     restaurant_table: Mapped["RestaurantTable"] = relationship(back_populates="orders", lazy="joined")
