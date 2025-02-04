@@ -11,6 +11,7 @@ class CreateOrderSchema(ma.SQLAlchemyAutoSchema):
     restaurant_table_id = fields.Integer(load_default=None)
     order_status = fields.Raw(load_default="Em preparo")
     delivery_type = fields.String(load_default=None)
+    order_items = fields.List(fields.Dict(), load_default=[])
     
     @validates("order_status")
     def validate_order_status(self, value):
