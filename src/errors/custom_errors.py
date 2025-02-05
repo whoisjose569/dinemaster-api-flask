@@ -30,3 +30,15 @@ class TableStatusMustBeAString(RestaurantTableError):
 class OrderStatusMustBeAString(OrderError):
     def __init__(self, table_number):
         super().__init__(f'Order status must be an string')
+
+class OrderQuantityMustBeAInteger(OrderError):
+    def __init__(self, table_number):
+        super().__init__(f'Order quantity must be an integer')
+
+class OrderQuantityMustBeAGreaterThanZero(OrderError):
+    def __init__(self, table_number):
+        super().__init__(f'Quantity must be greater than zero')
+
+class OrderPriceMustBeAFloat(OrderError):
+    def __init__(self, table_number):
+        super().__init__(f'Price must be a float')
