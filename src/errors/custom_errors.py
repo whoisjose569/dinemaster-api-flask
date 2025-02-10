@@ -42,3 +42,7 @@ class OrderQuantityMustBeAGreaterThanZero(OrderError):
 class OrderPriceMustBeAFloat(OrderError):
     def __init__(self, table_number):
         super().__init__(f'Price must be a float')
+
+class NotOrdersAvailable(OrderError):
+    def __init__(self):
+        super().__init__(f'No orders available to list.')

@@ -95,6 +95,14 @@ def register_error_handlers(app):
             "description": str(e),
         }, 400
 
+    @app.errorhandler(NotOrdersAvailable)
+    def handle_not_orders_available(e):
+        return {
+            "code": 404,
+            "name": "NotFound",
+            "description": str(e),
+        }, 404
+
     @app.errorhandler(Exception)
     def handle_generic_exception(e):
         return {
