@@ -1,6 +1,7 @@
 import pytest
 from src.domain.orders_use_cases.create_order import CreateOrderService
 from src.domain.orders_use_cases.list_orders import ListOrdersService
+from src.domain.orders_use_cases.list_order import ListOrderService
 from src.errors.custom_errors import TableNotExists, NotOrdersAvailable
 
 def test_create_order_when_table_not_exists(mocker):
@@ -23,3 +24,12 @@ def test_list_orders_not_orders_available(mocker):
     
     with pytest.raises(NotOrdersAvailable):
         service.list_orders()
+
+def test_list_orders_not_order_available(mocker):
+    mock_repo = mocker.Mock()
+    mock_repo.check_order_exists.return_value = None
+    
+    service = ListOrderService(mock_repo)
+    
+    with pytest.raises(NotOrdersAvailable):
+        service.list_order(1)
