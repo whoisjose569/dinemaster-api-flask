@@ -17,3 +17,7 @@ class OrdersRepository:
         self.__session.add(new_order)
         self.__session.commit()
         return new_order
+    
+    def list_orders(self):
+        orders_on_db = self.__session.query(Orders).all()
+        return orders_on_db
