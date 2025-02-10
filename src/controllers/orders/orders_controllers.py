@@ -4,6 +4,7 @@ from src.schemas.order_schemas.order_schemas import CreateOrderSchema
 from src.composer.orders_presenter_composer import order_presenter_composer
 from src.composer.orders.create_order_composer import create_order_composer
 from src.composer.orders.list_orders_composer import list_orders_composer
+from src.composer.orders.list_order_composer import list_order_composer
 
 bp = Blueprint('orders',__name__,url_prefix="/orders")
 
@@ -34,6 +35,18 @@ def list_oders():
         formatted_response = presenter.format_all_orders_presenter(response)
         return formatted_response, HTTPStatus.OK
     except Exception as exc:
-        raise         
+        raise  
+
+@bp.route('/<int:order_id>', methods=["GET"])
+def list_order(order_id):
+    try:
+        use_case = list_order_composer()
+        response = use_case.list_order(order_id)
+        
+        presenter = order_presenter_composer()
+        formatted_response = presenter.format_order_presenter(response)
+        return formatted_response, HTTPStatus.OK
+    except Exception as exc:
+        raise  
         
         
