@@ -10,6 +10,9 @@ class OrdersRepository:
     def check_table_exists(self, data):
         return self.__session.query(RestaurantTable).filter_by(id = data["restaurant_table_id"]).first()
     
+    def check_order_exists(self, order_id):
+        return self.__session.query(Orders).filter_by(id = order_id).first()
+    
     def create_order(self, data):
         if "order_items" in data:
             data["order_items"] = json.dumps(data["order_items"])
@@ -21,3 +24,7 @@ class OrdersRepository:
     def list_orders(self):
         orders_on_db = self.__session.query(Orders).all()
         return orders_on_db
+    
+    def list_order(self, order_id):
+        order_on_db = self.__session.query(Orders).filter_by(id = order_id).first()
+        return order_on_db
