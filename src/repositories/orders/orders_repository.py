@@ -28,3 +28,11 @@ class OrdersRepository:
     def list_order(self, order_id):
         order_on_db = self.__session.query(Orders).filter_by(id = order_id).first()
         return order_on_db
+
+    def update_order(self, order_id, data):
+        order_on_db = self.__session.query(Orders).filter_by(id=order_id).first()
+        order_on_db.order_status = data["order_status"]
+        self.__session.commit()
+        return order_on_db
+        
+        
