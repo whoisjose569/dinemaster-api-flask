@@ -37,3 +37,11 @@ class CreateOrderSchema(ma.SQLAlchemyAutoSchema):
     def validate_order_status(self, value):
         if not isinstance(value, str):
             raise OrderStatusMustBeAString("Order status must be an String")
+
+class UpdateOrderSchema(ma.Schema):
+    order_status = fields.Raw(required=True)
+
+    @validates("order_status")
+    def validate_order_status(self, value):
+        if not isinstance(value, str):
+            raise OrderStatusMustBeAString("Order status must be an String")
