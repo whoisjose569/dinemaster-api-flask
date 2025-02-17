@@ -83,5 +83,36 @@ def test_orders_repository_list_order(db_session):
     
     db_session.delete(restaurant_table_on_db)
     db_session.commit()
+
+def test_orders_repository_update_order(db_session):
+    restaurant_table = RestaurantTable(table_number = 125)
+    db_session.add(restaurant_table)
+    db_session.commit()
+
+    restaurant_table_on_db = db_session.query(RestaurantTable).filter_by(table_number=restaurant_table.table_number).first() 
     
+    items = [
+        {"item": "X-Bacon", "quantity": 1, "price": 12.50},
+        {"item": "Coca-Cola Lata", "quantity": 2, "price": 5.00}
+    ]
+    
+    order = Orders(restaurant_table_id = restaurant_table_on_db.id, order_items = json.dumps(items))
+    db_session.add(order)
+    db_session.commit()
+    
+    repo = OrdersRepository()
+    
+    order_status = {"order_status": "Retirada"}
+    
+    result = repo.update_order(restaurant_table_on_db.id, order_status)
+    
+    order_on_db = db_session.query(Orders).filter_by(id=order.id).first()
+    
+    assert order_on_db.order_status == result.order_status
+    
+    db_session.delete(restaurant_table_on_db)
+    db_session.commit()
+    
+    db_session.delete(order_on_db)
+    db_session.commit()
     
