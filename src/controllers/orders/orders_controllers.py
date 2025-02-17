@@ -1,10 +1,11 @@
 from flask import Blueprint, request
 from http import HTTPStatus
-from src.schemas.order_schemas.order_schemas import CreateOrderSchema
+from src.schemas.order_schemas.order_schemas import CreateOrderSchema, UpdateOrderSchema
 from src.composer.orders_presenter_composer import order_presenter_composer
 from src.composer.orders.create_order_composer import create_order_composer
 from src.composer.orders.list_orders_composer import list_orders_composer
 from src.composer.orders.list_order_composer import list_order_composer
+from src.composer.orders.update_order_composer import update_order_composer
 
 bp = Blueprint('orders',__name__,url_prefix="/orders")
 
@@ -48,5 +49,22 @@ def list_order(order_id):
         return formatted_response, HTTPStatus.OK
     except Exception as exc:
         raise  
+
+@bp.route('/<int:order_id>', methods=["PATCH"])
+def update_order(order_id):
+    try:
+        data = request.json
+        schema = UpdateOrderSchema()
+        
+        validatted_data = schema.load(data)
+        
+        use_case = update_order_composer()
+        response = use_case.update_order(order_id, validatted_data)
+        
+        presenter = order_presenter_composer()
+        formatted_response = presenter.format_order_presenter(response)
+        return formatted_response, HTTPStatus.OK
+    except Exception as exc:
+        raise 
         
         
