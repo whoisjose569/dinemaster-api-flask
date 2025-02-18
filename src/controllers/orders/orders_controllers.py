@@ -6,6 +6,7 @@ from src.composer.orders.create_order_composer import create_order_composer
 from src.composer.orders.list_orders_composer import list_orders_composer
 from src.composer.orders.list_order_composer import list_order_composer
 from src.composer.orders.update_order_composer import update_order_composer
+from src.composer.orders.delete_order_composer import delete_order_composer
 
 bp = Blueprint('orders',__name__,url_prefix="/orders")
 
@@ -64,6 +65,16 @@ def update_order(order_id):
         presenter = order_presenter_composer()
         formatted_response = presenter.format_order_presenter(response)
         return formatted_response, HTTPStatus.OK
+    except Exception as exc:
+        raise 
+
+@bp.route('/<int:order_id>', methods=["DELETE"])
+def delete_order(order_id):
+    try:
+        use_case = delete_order_composer()
+        use_case.delete_order(order_id)
+        
+        return "", HTTPStatus.NO_CONTENT
     except Exception as exc:
         raise 
         
