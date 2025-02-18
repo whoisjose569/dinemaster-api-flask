@@ -34,5 +34,10 @@ class OrdersRepository:
         order_on_db.order_status = data["order_status"]
         self.__session.commit()
         return order_on_db
+    
+    def delete_order(self, order_id) -> None:
+        order_on_db = self.__session.query(Orders).filter_by(id=order_id).first()
+        self.__session.delete(order_on_db)
+        self.__session.commit()
         
         
