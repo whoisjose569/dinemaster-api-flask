@@ -10,3 +10,6 @@ class UsersRepository:
         self.__session.add(new_user)
         self.__session.commit()
     
+    def get_by_username(self, username):
+        user_on_db = self.__session.query(Users).filter_by(username=username).first()
+        return user_on_db
