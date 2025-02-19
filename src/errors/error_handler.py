@@ -102,6 +102,22 @@ def register_error_handlers(app):
             "name": "NotFound",
             "description": str(e),
         }, 404
+    
+    @app.errorhandler(UserNotFound)
+    def handle_user_not_found(e):
+        return {
+            "code": 404,
+            "name": "NotFound",
+            "description": str(e),
+        }, 404
+
+    @app.errorhandler(UserWrongPassword)
+    def handle_user_wrong_password(e):
+        return {
+            "code": 401,
+            "name": "Unauthorized",
+            "description": str(e),
+        }, 401
 
     @app.errorhandler(Exception)
     def handle_generic_exception(e):

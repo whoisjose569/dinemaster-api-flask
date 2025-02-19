@@ -4,6 +4,9 @@ class RestaurantTableError(Exception):
 class OrderError(Exception):
     pass
 
+class UsersError(Exception):
+    pass
+
 class TableAlreadyExistsError(RestaurantTableError):
     def __init__(self, table_number):
         super().__init__(f'The table with the number {table_number} is already registered.')
@@ -46,3 +49,11 @@ class OrderPriceMustBeAFloat(OrderError):
 class NotOrdersAvailable(OrderError):
     def __init__(self):
         super().__init__(f'No orders available to list.')
+
+class UserNotFound(UsersError):
+    def __init__(self):
+        super().__init__(f'User not found.')
+
+class UserWrongPassword(UsersError):
+    def __init__(self):
+        super().__init__(f'User wrong password')
