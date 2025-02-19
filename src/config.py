@@ -12,6 +12,7 @@ def configure_app(app: Flask):
 class Config:
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     SQLALCHEMY_DATABASE_URI = config("DB_URLA")
+    JWT_SECRET_KEY="super-secret"
 
 
  
