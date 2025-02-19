@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from http import HTTPStatus
-from flask_jwt_extended import create_access_token
 from src.composer.users.create_user_composer import create_user_composer
+from src.composer.users.authenticate_user_composer import authenticate_user_composer
 
 
 bp = Blueprint('auth',__name__,url_prefix="/auth")
@@ -21,10 +21,11 @@ def create_user():
 
 @bp.route("/login", methods=["POST"])
 def login():
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
-    if username != "test" or password != "test":
-        return {"msg": "Bad username or password"}, HTTPStatus.UNAUTHORIZED
-
-    access_token = create_access_token(identity=username)
-    return {"access_token": access_token}
+    try:
+        data = request.json
+        
+        use_case = authenticate_user_composer()
+        response = use_case.authenticate_user(data)
+        return response, HTTPStatus.OK
+    except Exception as exc:
+        raise
