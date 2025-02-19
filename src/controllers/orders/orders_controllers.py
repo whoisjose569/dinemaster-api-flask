@@ -7,6 +7,7 @@ from src.composer.orders.list_orders_composer import list_orders_composer
 from src.composer.orders.list_order_composer import list_order_composer
 from src.composer.orders.update_order_composer import update_order_composer
 from src.composer.orders.delete_order_composer import delete_order_composer
+from flask_jwt_extended import jwt_required
 
 bp = Blueprint('orders',__name__,url_prefix="/orders")
 
@@ -28,6 +29,7 @@ def create_order():
         raise
 
 @bp.route('/',methods=["GET"])
+@jwt_required()
 def list_oders():
     try:
         use_case = list_orders_composer()
